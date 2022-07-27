@@ -51,9 +51,9 @@ describe("Bundlers Contract", () => {
       protocol: "http",
     });
 
-    LoggerFactory.INST.logLevel("error");
-    // LoggerFactory.INST.logLevel("warn", "WASM:Rust");
-    // LoggerFactory.INST.logLevel("warn", "WasmContractHandlerApi");
+    LoggerFactory.INST.logLevel("trace");
+    LoggerFactory.INST.logLevel("trace", "WASM:Rust");
+    LoggerFactory.INST.logLevel("trace", "WasmContractHandlerApi");
 
     warp = WarpNodeFactory.memCachedBased(arweave).useArweaveGateway().build();
 

@@ -103,8 +103,9 @@ appArgs
   );
 
 run(appArgs.parse(process.argv).opts())
-  .then((txId) => {
-    console.error(`Deployment done, ${txId}`);
+  .then((result) => {
+    console.error("Deployment done");
+    console.log(JSON.stringify(result));
     process.exit(0);
   })
   .catch((err) => {

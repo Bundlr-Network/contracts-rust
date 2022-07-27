@@ -22,7 +22,7 @@ function readJwk(filepath: string): Promise<JWKInterface> {
 type AllowanceArgs = {
   gateway: string;
   contract: string;
-  wallet: null | string;
+  wallet: string;
   owner: string;
   spender: string;
 };
@@ -30,7 +30,7 @@ type AllowanceArgs = {
 type ApproveArgs = {
   gateway: string;
   contract: string;
-  wallet: null | string;
+  wallet: string;
   spender: string;
   amount: string;
 };
@@ -38,7 +38,7 @@ type ApproveArgs = {
 type BalanceArgs = {
   gateway: string;
   contract: string;
-  wallet: null | string;
+  wallet: string;
   address: string;
 };
 
@@ -47,7 +47,7 @@ type TransferArgs = {
   contract: string;
   recipient: string;
   amount: string;
-  wallet: null | string;
+  wallet: string;
 };
 
 function defaultPort(protocol: string) {
@@ -137,8 +137,11 @@ async function transfer(args: TransferArgs) {
   console.log(res);
 }
 
-
-async function readState(args: { wallet: string, gateway:string, contract: string }) {
+async function readState(args: {
+  wallet: string;
+  gateway: string;
+  contract: string;
+}) {
   let arweaveUrl = new URL(args.gateway);
 
   let wallet = await readJwk(args.wallet);
@@ -196,7 +199,7 @@ program
       });
   });
 
-  program
+program
   .command("read-state")
   .option(
     "-g, --gateway <url>",

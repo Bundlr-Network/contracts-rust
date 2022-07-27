@@ -10,7 +10,7 @@ use wasm_bindgen::JsValue;
 
 use crate::{
     action::ActionResult,
-    contract_utils::handler_result::HandlerResult,
+    contract_utils::{handler_result::HandlerResult, js_imports::log},
     error::ContractError,
     state::{State, Validator},
 };
@@ -42,6 +42,7 @@ pub async fn join(mut state: State, stake: Amount, url: Url) -> ActionResult {
         return Err(ContractError::AlreadyJoined);
     }
 
+    log("BEFORE TRANSFER");
     let result = SmartWeave::write(
         &state.token.to_string(),
         JsValue::from_serde(&Input {
@@ -55,7 +56,11 @@ pub async fn join(mut state: State, stake: Amount, url: Url) -> ActionResult {
     )
     .await;
 
+    log("AFTER TRANSFER");
+
+
     let result: Result = result.into_serde().unwrap();
+    log(&format!("AFTER TRANSFER RESULT {:?}", result));
 
     if result.result_type != "ok" {
         return Err(ContractError::TransferFailed);
@@ -69,6 +74,8 @@ pub async fn join(mut state: State, stake: Amount, url: Url) -> ActionResult {
             url,
         },
     );
+
+    log("JOINED VALIDATOR");
 
     Ok(HandlerResult::NewState(state))
 }

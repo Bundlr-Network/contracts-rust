@@ -13,7 +13,7 @@ function getConnection(): [Arweave, Warp] {
     protocol: "http",
   });
 
-  LoggerFactory.INST.logLevel("error");
+  LoggerFactory.INST.logLevel("trace");
 
   return [arweave, WarpNodeFactory.memCachedBased(arweave).useArweaveGateway().build()];
 }

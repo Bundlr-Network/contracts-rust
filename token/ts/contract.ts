@@ -244,16 +244,15 @@ export function deploy(
   );
 
   // deploying contract using the new SDK.
-  return warp.createContract.deploy(
-    {
-      wallet,
-      initState: JSON.stringify(initialState),
-      src: contractSrc,
-      wasmSrcCodeDir: path.join(__dirname, "../src"),
-      wasmGlueCode: path.join(__dirname, "../pkg/rust-contract.js"),
-    },
-    useBundler
-  );
+  const deployArgs = {
+    wallet,
+    initState: JSON.stringify(initialState),
+
+    src: contractSrc,
+    wasmSrcCodeDir: path.join(__dirname, "../src"),
+    wasmGlueCode: path.join(__dirname, "../pkg/rust-contract.js"),
+  };
+  return warp.createContract.deploy(deployArgs, useBundler);
 }
 
 export async function connect(

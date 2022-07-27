@@ -1,0 +1,9 @@
+{
+  "ticker": "TST",
+  "name": "Test Token",
+  "decimals": 10,
+  "totalSupply": "10000000000000000000",
+  "owner": null,
+  "balances": {},
+  "allowances": {}
+}

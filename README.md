@@ -185,3 +185,72 @@ npx ts-node ts/tools.ts join \
     -s 10 \
     -u https://example.com
 ```
+
+### Scripted Test Setup
+
+Create secrets file with Mozilla SOPS. The following command expects that `validator` project can be found from parallel folder to this project.
+
+```sh
+cd utils
+sh initialize-secrets.sh \
+    <GPG_FINGERPRINT> \
+    ./secrets.test.yaml \
+    "../../validator/target/debug/wallet-tool create" \
+    "../../validator/target/debug/wallet-tool show-address"
+```
+
+Deploy everything
+
+```sh
+cd utils
+sops exec-file --output-type=json ../../secrets.test.yaml "yarn deploy --gateway http://localhost:1984 --secrets {} --arlocal"
+```
+
+Alternatively, if you don't want to use SOPS for secrets, create JSON file
+
+```json-with-comments
+{
+    "wallets": {
+        "token-contract-owner": {
+            // Arweave key data
+        },
+        "bundlers-contract-owner": {
+            // Arweave key data
+        },
+        "bundler-1": {
+            // Arweave key data
+        },
+        "bundler-2": {
+            // Arweave key data
+        },
+        "validator-1": {
+            // Arweave key data
+        },
+        "validator-2": {
+            // Arweave key data
+        },
+        "validator-3": {
+            // Arweave key data
+             },
+        "validator-4": {
+            // Arweave key data
+           },
+        "validator-5": {
+            // Arweave key data
+        },
+        "validator-6": {
+            // Arweave key data
+        },
+        "validator-7": {
+            // Arweave key data
+        }
+    }
+}
+```
+
+and then run deployment script:
+
+```sh
+cd utils
+yarn deploy --gateway http://localhost:1984 --secrets /path/to/secrets --arlocal
+```

@@ -67,7 +67,7 @@ async function run(args: CliArgs) {
     },
   };
 
-  return await deploy(warp, wallet, initialState, true);
+  return await deploy(warp, wallet, initialState, false);
 }
 
 let appVersion: string;
@@ -89,8 +89,9 @@ appArgs
   );
 
 run(appArgs.parse(process.argv).opts())
-  .then((txId) => {
-    console.error(`Deployment done, ${txId}`);
+  .then((result) => {
+    console.error("Deployment done");
+    console.log(JSON.stringify(result));
     process.exit(0);
   })
   .catch((err) => {

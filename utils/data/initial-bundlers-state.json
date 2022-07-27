@@ -1,0 +1,7 @@
+{
+  "bundlers": {},
+  "withdrawDelay": 21600,
+  "token": null,
+  "stake": "100",
+  "allowedInteractors": []
+}

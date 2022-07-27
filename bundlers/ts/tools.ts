@@ -225,7 +225,6 @@ program
     "Token contract address",
     process.env.BUNDLR_TOKEN_CONTRACT
   )
-  .requiredOption("-v, --validator-state <path>", "Path to validator contract's initial state")
   .requiredOption("-w, --wallet <path>", "Path to wallet file")
   .action((opts) => {
     readState(opts)

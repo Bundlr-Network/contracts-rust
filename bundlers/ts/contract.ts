@@ -5,11 +5,13 @@ import {
   Contract,
   ContractDeploy,
   HandlerBasedContract,
+  sleep,
   Warp,
 } from "warp-contracts";
 
 export type State = {
   bundlers: { [key: string]: string | null };
+  allowedInteractors: string[];
   token: string;
   stake: string;
   withdrawDelay: number;
@@ -134,16 +136,20 @@ class BundlersContractImpl
     });
   }
 
-  write(input: any): Promise<string> {
+  async write(input: any): Promise<string> {
+    const dry = await this.dryWrite(input);
     return this._mainnet
-      ? this.bundleInteraction(input).then((response) => {
+      ? this.bundleInteraction(input).then(async(response) => {
           if (response) {
+            await fs.promises.writeFile(`dry_${response.originalTxId}`, `BUNDLER WRITE ${this._mainnet} ${JSON.stringify(dry, null, 4)}`);
             return response.originalTxId;
           }
           throw Error("Received 'null' as interaction response");
         })
-      : this.writeInteraction(input).then((result) => {
+      : this.writeInteraction(input).then(async (result) => {
+          // if (input.function === "join") { console.log("SLEEPING"); await sleep(10000); }
           if (result) {
+            await fs.promises.writeFile(`dry_${result}`, `BUNDLER WRITE ${this._mainnet} ${JSON.stringify(dry, null, 4)}`);
             return result;
           }
           throw Error("Received 'null' as interaction response");

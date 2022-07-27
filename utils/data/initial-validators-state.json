@@ -1,0 +1,13 @@
+{
+  "bundler": null,
+  "bundlersContract": null,
+  "epoch": { "seq": "0", "tx": "", "height": "0" },
+  "epochDuration": 500,
+  "minimumStake": "0",
+  "token": null,
+  "maxNumNominatedValidators": 10,
+  "validators": {},
+  "nominatedValidators": [],
+  "slashProposalLifetime": 500,
+  "slashProposals": {}
+}
